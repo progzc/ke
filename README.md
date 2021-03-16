@@ -117,3 +117,4 @@ DELIMITER ;
 CALL insert_course(39,365*3);
 ```
 
+![image-20210316191330858](README.assets/image-20210316191330858.png)

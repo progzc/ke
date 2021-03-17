@@ -5,10 +5,10 @@ server:
     max-threads: 1000 # 最多支持1000个线程
     min-spare-threads: 30 # 至少有30个空闲线程
   # 端口分配：博客前台端口8080；博客管理前台端口8081；博客后台端口8082
-  port: 8082
+  port: 8090
   connection-timeout: 5000ms # 请求超时时间5s
   servlet:
-    #项目映射路径，相当于网络请求为 http://localhost:8082/ke
+    #项目映射路径，相当于网络请求为 http://localhost:8090/ke
     context-path: /ke
 
 # Spring配置
@@ -35,9 +35,9 @@ spring:
   devtools:
     restart:
       enabled: true # 配置项目进行热部署
-  cache:
-    type: redis
-    cache-names: KE:INFO,KE:COURSE # Spring缓存命名空间
+#  cache:
+#    type: redis
+#    cache-names: KE:INFO,KE:COURSE # Spring缓存命名空间
 
 # MyBatisPlus配置
 mybatis-plus:

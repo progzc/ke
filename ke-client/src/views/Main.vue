@@ -14,7 +14,7 @@ import MainSidebar from 'views/layout/MainSidebar'
 import MainContent from 'views/layout/MainContent'
 
 export default {
-  name: 'main',
+  name: 'Main',
   components: {
     'main-navbar': MainNavbar,
     'main-sidebar': MainSidebar,

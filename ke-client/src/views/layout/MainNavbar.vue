@@ -16,5 +16,26 @@ export default {
 </script>
 
 <style lang="scss" type="text/scss" rel="stylesheet/scss" scoped>
+  .site-navbar{
+    .site-navbar-header{
+      .site-navbar-brand{
+        background-color: #263238;
+        margin: 0;
+        line-height: 50px;
+        .icon-ke{
+          color: #fffffb;
+          font-size: 26px;
+          margin: auto 10px;
+        }
+        .site-navbar-brand-name{
+          color: #fffffb;
+          text-decoration: none;
+          &:hover{
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
 
 </style>

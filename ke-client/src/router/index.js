@@ -18,8 +18,8 @@ const globalRoutes = [
 // 配置主路由
 const mainRoutes = {
   path: '/',
-  component: _import('main'),
-  name: 'main',
+  component: _import('Main'),
+  name: 'Main',
   redirect: { name: 'home' },
   meta: { title: '主入口整体布局' },
   children: [

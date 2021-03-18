@@ -16,12 +16,12 @@ body {
 
 /* 设置链接样式 */
 a {
-  color: mix(#fff, $--color-primary, 20%);
+  color: mix(#fff, #17b3a3, 20%);
   text-decoration: none;
 
   &:focus,
   &:hover {
-    color: $--color-primary;
+    color: #17b3a3;
     text-decoration: underline;
   }
 }

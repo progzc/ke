@@ -21,7 +21,8 @@ export default {
       .site-navbar-brand{
         background-color: #263238;
         margin: 0;
-        line-height: 50px;
+        height: 56px;
+        line-height: 56px;
         .icon-ke{
           color: #fffffb;
           font-size: 26px;
@@ -37,5 +38,4 @@ export default {
       }
     }
   }
-
 </style>

@@ -29,4 +29,9 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
     public List<Info> queryListByMenuId(Integer id) {
         return infoMapper.selectList(new QueryWrapper<Info>().lambda().eq(Info::getMenuId, id));
     }
+
+    @Override
+    public List<Integer> queryIdListByMenuId(Integer id) {
+        return infoMapper.queryIdListByMenuId(id);
+    }
 }

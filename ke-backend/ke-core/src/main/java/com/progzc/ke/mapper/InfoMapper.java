@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.progzc.ke.entity.Info;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @Description Info DAO层接口
  * @Author zhaocho
@@ -13,5 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface InfoMapper extends BaseMapper<Info> {
-    
+
+    List<Integer> queryIdListByMenuId(Integer id);
 }

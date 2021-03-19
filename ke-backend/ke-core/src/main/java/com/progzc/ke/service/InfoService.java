@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface InfoService extends IService<Info> {
     List<Info> queryListByMenuId(Integer id);
+
+    List<Integer> queryIdListByMenuId(Integer id);
 }

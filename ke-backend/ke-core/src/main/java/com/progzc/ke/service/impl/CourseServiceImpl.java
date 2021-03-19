@@ -29,4 +29,14 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         return courseMapper.queryListByCourseId(id, count);
 
     }
+
+    @Override
+    public Long querySellingSumByCourseIds(List<Integer> idList, Integer count) {
+        return courseMapper.querySellingSumByCourseIds(idList, count);
+    }
+
+    @Override
+    public Long queryViewSumByCourseIds(List<Integer> idList, Integer count) {
+        return courseMapper.queryViewSumByCourseIds(idList, count);
+    }
 }

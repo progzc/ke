@@ -14,4 +14,8 @@ import java.util.List;
  */
 public interface CourseService extends IService<Course> {
     List<Course> queryListByCourseId(Integer id, Integer count);
+
+    Long querySellingSumByCourseIds(List<Integer> idList, Integer count);
+
+    Long queryViewSumByCourseIds(List<Integer> idList, Integer count);
 }

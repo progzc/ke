@@ -3,6 +3,7 @@ package com.progzc.ke.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.progzc.ke.entity.Course;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +17,9 @@ import java.util.List;
 @Mapper
 public interface CourseMapper extends BaseMapper<Course> {
     List<Course> queryListByCourseId(Integer id, Integer count);
+
+    Long querySellingSumByCourseIds(@Param("idList") List<Integer> idList, Integer count);
+
+    Long queryViewSumByCourseIds(@Param("idList") List<Integer> idList, Integer count);
+
 }

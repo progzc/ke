@@ -3,6 +3,28 @@
 <mapper namespace="com.progzc.ke.mapper.CourseMapper">
 
     <select id="queryListByCourseId" resultType="com.progzc.ke.entity.Course">
-        SELECT * FROM course WHERE course_id = #{id} ORDER BY log_date DESC LIMIT 0,#{count};
+        SELECT * FROM course WHERE course_id = #{id} ORDER BY log_date DESC LIMIT 0,#{count}
+    </select>
+    <select id="querySellingSumByCourseIds" resultType="java.lang.Long">
+        select sum(o.selling_quantity)
+        from
+        (select selling_quantity
+        from course
+        where course_id in
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="idList">
+            #{item}
+        </foreach>
+        ORDER BY log_date DESC LIMIT 0,#{count}) as o
+    </select>
+    <select id="queryViewSumByCourseIds" resultType="java.lang.Long">
+        select sum(o.page_view)
+        from
+        (select page_view
+        from course
+        where course_id in
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="idList">
+            #{item}
+        </foreach>
+        ORDER BY log_date DESC LIMIT 0,#{count}) as o
     </select>
 </mapper>

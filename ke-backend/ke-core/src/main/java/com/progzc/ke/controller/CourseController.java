@@ -4,9 +4,11 @@ import com.progzc.ke.common.Result;
 import com.progzc.ke.constants.Category;
 import com.progzc.ke.entity.Course;
 import com.progzc.ke.entity.Info;
+import com.progzc.ke.entity.Menu;
 import com.progzc.ke.entity.chart.Sery;
 import com.progzc.ke.service.CourseService;
 import com.progzc.ke.service.InfoService;
+import com.progzc.ke.service.MenuService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,14 +33,17 @@ import java.util.List;
 public class CourseController {
 
     @Autowired
+    private MenuService menuService;
+
+    @Autowired
     private CourseService courseService;
 
     @Autowired
     private InfoService infoService;
 
-    @GetMapping("/chart")
+    @GetMapping("/lineChart")
     @ApiOperation(value = "获取子模块的折线图")
-    public Result module(Integer id, Integer count, Integer category) {
+    public Result lineChart(Integer id, Integer count, Integer category) {
         List<Info> infos = infoService.queryListByMenuId(id);
         Iterator<Info> iterator = infos.iterator();
         String[] legend = new String[infos.size()];
@@ -64,5 +70,28 @@ public class CourseController {
             i++;
         }
         return Result.ok().put("legend", legend).put("series", series);
+    }
+
+    @GetMapping("/histogramChart")
+    @ApiOperation(value = "获取子模块的直方图")
+    public Result histogramChart(Integer menuId, Integer count, Integer category) {
+        List<Menu> ids = menuService.getModuleById(menuId);
+        Iterator<Menu> iterator = ids.iterator();
+        String[] xAxisHdata = new String[ids.size()];
+        Long[] seriesHdata = new Long[ids.size()];
+        int i = 0;
+        while (iterator.hasNext()) {
+            Menu next = iterator.next();
+            xAxisHdata[i] = next.getName();
+            List<Integer> idList = infoService.queryIdListByMenuId(next.getId());
+            if (Category.SELLING == category) {
+                seriesHdata[i] = courseService.querySellingSumByCourseIds(idList, count * ids.size());
+            } else {
+                seriesHdata[i] = courseService.queryViewSumByCourseIds(idList, count * ids.size());
+            }
+            i++;
+        }
+        System.out.println(Arrays.toString(seriesHdata));
+        return Result.ok().put("xAxisHdata", xAxisHdata).put("seriesHdata", seriesHdata);
     }
 }

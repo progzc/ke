@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.progzc.ke.mapper.CourseMapper">
 
+    <select id="queryListByCourseId" resultType="com.progzc.ke.entity.Course">
+        SELECT * FROM course WHERE course_id = #{id} ORDER BY log_date DESC LIMIT 0,#{count};
+    </select>
 </mapper>

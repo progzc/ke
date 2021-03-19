@@ -35,9 +35,9 @@ spring:
   devtools:
     restart:
       enabled: true # 配置项目进行热部署
-#  cache:
-#    type: redis
-#    cache-names: KE:INFO,KE:COURSE # Spring缓存命名空间
+  cache:
+    type: redis
+    cache-names: KE:MENU,KE:INFO,KE:COURSE # Spring缓存命名空间
 
 # MyBatisPlus配置
 mybatis-plus:

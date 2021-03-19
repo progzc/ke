@@ -2,4 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.progzc.ke.mapper.MenuMapper">
 
+    <!--根据parentId查询菜单-->
+    <select id="queryListParentId" resultType="com.progzc.ke.entity.Menu">
+        select * from menu where parent_id = #{parentId}
+    </select>
 </mapper>

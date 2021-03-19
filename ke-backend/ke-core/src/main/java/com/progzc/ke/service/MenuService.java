@@ -3,6 +3,8 @@ package com.progzc.ke.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.progzc.ke.entity.Menu;
 
+import java.util.List;
+
 /**
  * @Description Menu服务接口
  * @Author zhaocho
@@ -11,4 +13,7 @@ import com.progzc.ke.entity.Menu;
  * @Version V1.0
  */
 public interface MenuService extends IService<Menu> {
+    List<Menu> listMenu();
+
+    List<Menu> getModuleById(Integer id);
 }

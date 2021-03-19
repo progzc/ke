@@ -7,6 +7,9 @@ import com.progzc.ke.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * @Description Course服务实现类
  * @Author zhaochao
@@ -17,4 +20,13 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements CourseService {
+
+    @Resource
+    private CourseMapper courseMapper;
+
+    @Override
+    public List<Course> queryListByCourseId(Integer id, Integer count) {
+        return courseMapper.queryListByCourseId(id, count);
+
+    }
 }

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.progzc.ke.entity.Course;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @Description Course DAO层接口
  * @Author zhaocho
@@ -13,4 +15,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CourseMapper extends BaseMapper<Course> {
+    List<Course> queryListByCourseId(Integer id, Integer count);
 }

@@ -3,6 +3,8 @@ package com.progzc.ke.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.progzc.ke.entity.Course;
 
+import java.util.List;
+
 /**
  * @Description Course服务接口
  * @Author zhaocho
@@ -11,4 +13,5 @@ import com.progzc.ke.entity.Course;
  * @Version V1.0
  */
 public interface CourseService extends IService<Course> {
+    List<Course> queryListByCourseId(Integer id, Integer count);
 }

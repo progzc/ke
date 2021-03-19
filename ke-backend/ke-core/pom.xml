@@ -121,7 +121,7 @@
 
     <!--项目运行配置-->
     <build>
-        <finalName>zcblog-search-1.0-SNAPSHOT</finalName><!--配置最终jar包的名称-->
+        <finalName>KeOfQQ-1.0-SNAPSHOT</finalName><!--配置最终jar包的名称-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

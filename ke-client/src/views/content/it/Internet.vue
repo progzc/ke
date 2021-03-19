@@ -4,45 +4,103 @@
     <div class="internet-content-select">
       <div class="internet-content-select-module">
         <span>课程模块</span>
-        <el-select v-model="initValue" placeholder="请选择">
+        <el-select v-model="initValue" placeholder="请选择" @change="currentSel">
           <el-option
             v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
           </el-option>
         </el-select>
       </div>
       <div class="internet-content-select-time">
         <span>时间范围</span>
-        <el-radio v-model="radioTime" label="1">近一周</el-radio>
-        <el-radio v-model="radioTime" label="2">近一月</el-radio>
-        <el-radio v-model="radioTime" label="3">近一年</el-radio>
+        <el-radio-group v-model="radioTime" @change="currentTime">
+          <el-radio v-model="radioTime" label="7">近一周</el-radio>
+          <el-radio v-model="radioTime" label="30">近一月</el-radio>
+          <el-radio v-model="radioTime" label="365">近一年</el-radio>
+        </el-radio-group>
       </div>
       <div class="internet-content-select-category">
         <span>类别</span>
-        <el-radio v-model="radioCategory" label="1">购买数</el-radio>
-        <el-radio v-model="radioCategory" label="2">浏览数</el-radio>
+        <el-radio-group v-model="radioCategory" @change="currentCategory">
+          <el-radio label="1">购买数</el-radio>
+          <el-radio label="2">浏览数</el-radio>
+        </el-radio-group>
       </div>
     </div>
-    <div class="internet-content-display">
-
+    <div class="internet-content-display" v-if="initValue">
+      <line-chart :legend="legend" :series="series"></line-chart>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import LineChart from 'components/content/LineChart'
+
+import { executeGetCourseModule } from 'network/api/internet'
+import { executeGetDisplayLineChart } from 'network/api/course'
+
 export default {
   name: 'Internet',
+  components: {
+    'line-chart': LineChart
+  },
   data () {
     return {
+      menuId: 1,
       options: [],
-      initValue: '',
+      initValue: null,
+      selVal: '',
       selectFlag: false,
-      radioTime: '1',
-      radioCategory: '1'
+      radioTime: '7',
+      radioCategory: '1',
+      legend: '',
+      series: []
+    }
+  },
+  created () {
+    this.getCourseModule(this.menuId)
+  },
+  mounted () {
+    if (this.initValue) {
+      this.displayLineChart(this.selVal, this.radioTime, this.radioCategory)
+    }
+  },
+  methods: {
+    getCourseModule (menuId) {
+      executeGetCourseModule(menuId).then(data => {
+        if (data && data.code === 200) {
+          this.options = data.options
+        } else {
+          this.$message.error(data.msg)
+        }
+      })
+    },
+    displayLineChart (selVal, radioTime, radioCategory) {
+      executeGetDisplayLineChart(selVal, radioTime, radioCategory).then(data => {
+        if (data && data.code === 200) {
+          this.legend = data.legend
+          this.series = data.series
+        } else {
+          this.$message.error(data.msg)
+        }
+      })
+    },
+    currentSel (selVal) {
+      this.selVal = selVal
+      this.displayLineChart(this.selVal, this.radioTime, this.radioCategory)
+    },
+
+    currentCategory () {
+      this.displayLineChart(this.selVal, this.radioTime, this.radioCategory)
+    },
+
+    currentTime () {
+      this.displayLineChart(this.selVal, this.radioTime, this.radioCategory)
     }
   }
+
 }
 </script>
 

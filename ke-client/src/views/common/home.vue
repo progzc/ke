@@ -1,6 +1,6 @@
 <template>
   <div class = "home-content">
-    <h3>腾讯课堂监控统计系统</h3>
+    <h3>课堂监控统计系统</h3>
   </div>
 </template>
 

@@ -32,19 +32,27 @@
     <div class="internet-content-display" v-if="initValue">
       <line-chart :legend="legend" :series="series"></line-chart>
     </div>
+    <div class="internet-content-display">
+      <histogram-chart :xAxisHdata="xAxisHdata" :seriesHdata="seriesHdata"></histogram-chart>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import LineChart from 'components/content/LineChart'
+import HistogramChart from 'components/content/HistogramChart'
 
 import { executeGetCourseModule } from 'network/api/internet'
-import { executeGetDisplayLineChart } from 'network/api/course'
+import {
+  executeGetDisplayLineChart,
+  executeGetDisplayHistogramChart
+} from 'network/api/course'
 
 export default {
   name: 'Internet',
   components: {
-    'line-chart': LineChart
+    'line-chart': LineChart,
+    'histogram-chart': HistogramChart
   },
   data () {
     return {
@@ -56,7 +64,9 @@ export default {
       radioTime: '7',
       radioCategory: '1',
       legend: '',
-      series: []
+      series: [],
+      xAxisHdata: [],
+      seriesHdata: []
     }
   },
   created () {
@@ -65,6 +75,8 @@ export default {
   mounted () {
     if (this.initValue) {
       this.displayLineChart(this.selVal, this.radioTime, this.radioCategory)
+    } else {
+      this.displayHistogramChart(this.menuId, this.radioTime, this.radioCategory)
     }
   },
   methods: {
@@ -87,17 +99,30 @@ export default {
         }
       })
     },
+    displayHistogramChart (menuId, radioTime, radioCategory) {
+      executeGetDisplayHistogramChart(menuId, radioTime, radioCategory).then(data => {
+        if (data && data.code === 200) {
+          this.xAxisHdata = data.xAxisHdata
+          this.seriesHdata = data.seriesHdata
+        } else {
+          this.$message.error(data.msg)
+        }
+      })
+    },
     currentSel (selVal) {
       this.selVal = selVal
       this.displayLineChart(this.selVal, this.radioTime, this.radioCategory)
+      this.displayHistogramChart(this.menuId, this.radioTime, this.radioCategory)
     },
 
     currentCategory () {
       this.displayLineChart(this.selVal, this.radioTime, this.radioCategory)
+      this.displayHistogramChart(this.menuId, this.radioTime, this.radioCategory)
     },
 
     currentTime () {
       this.displayLineChart(this.selVal, this.radioTime, this.radioCategory)
+      this.displayHistogramChart(this.menuId, this.radioTime, this.radioCategory)
     }
   }
 

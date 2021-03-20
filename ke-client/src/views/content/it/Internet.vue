@@ -16,9 +16,9 @@
       <div class="internet-content-select-time">
         <span>时间范围</span>
         <el-radio-group v-model="radioTime" @change="currentTime">
-          <el-radio v-model="radioTime" label="7">近一周</el-radio>
-          <el-radio v-model="radioTime" label="30">近一月</el-radio>
-          <el-radio v-model="radioTime" label="365">近一年</el-radio>
+          <el-radio label="7">近一周</el-radio>
+          <el-radio label="30">近一月</el-radio>
+          <el-radio label="365">近一年</el-radio>
         </el-radio-group>
       </div>
       <div class="internet-content-select-category">

@@ -50,7 +50,7 @@ export default {
           height: '80%',
           right: null,
           bottom: null,
-          sizeRange: [20, 100],
+          sizeRange: [10, 75],
           rotationRange: [-90, 90],
           rotationStep: 35,
           gridSize: 15,

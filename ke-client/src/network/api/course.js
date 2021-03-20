@@ -9,7 +9,7 @@ export function executeGetDisplayLineChart (selVal, radioTime, radioCategory) {
       count: radioTime,
       category: radioCategory
     }
-  })
+  }, false)
 }
 
 export function executeGetDisplayHistogramChart (menuId, radioTime, radioCategory) {
@@ -21,5 +21,5 @@ export function executeGetDisplayHistogramChart (menuId, radioTime, radioCategor
       count: radioTime,
       category: radioCategory
     }
-  })
+  }, false)
 }

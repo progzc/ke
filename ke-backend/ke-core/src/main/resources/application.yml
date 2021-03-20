@@ -15,7 +15,7 @@ server:
 spring:
   profiles:
     # 配置环境：开发dev,测试test,生产prod
-    active: dev  # 将application-dev.yml中的内容合并到本配置文件中
+    active: prod  # 将application-dev.yml中的内容合并到本配置文件中
   jackson:
     serialization:
       # 从数据库返回的时间戳是long型的毫秒值

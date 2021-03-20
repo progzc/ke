@@ -50,7 +50,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public Docket restApiGroup1(Environment environment) {
         // 设置要显示的Swagger环境
-        Profiles profiles = Profiles.of("dev", "test");
+        Profiles profiles = Profiles.of("dev", "test", "prod");
         // 获取项目的环境
         boolean isDevAndTest = environment.acceptsProfiles(profiles);
 

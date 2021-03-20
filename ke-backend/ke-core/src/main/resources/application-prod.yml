@@ -5,9 +5,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver  # 使用MySQL数据库
     druid:
       # 配置数据库连接地址并进行相关设置（允许进行批处理、使用utf-8字符集、不进行SSL连接、使用格林威治时间）
-      url: jdbc:mysql://localhost:3306/ke?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+      url: jdbc:mysql://8.129.65.158:3306/ke?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
       username: root  # 数据库用户名
-      password: root  # 数据库密码
+      password: root123_zC  # 数据库密码
       initial-size: 10  # 初始连接数10个
       max-active: 100  # 最大连接数100个
       min-idle: 10  # 最小空闲数是10个
@@ -42,7 +42,7 @@ spring:
   # 配置redis
   redis:
     host: localhost  # 配置主机为本机
-    port: 6381  # 配置端口号
+    port: 6379  # 配置端口号
     timeout: 6s  # 配置连接池超时时长为6s
     lettuce:
       pool:
@@ -57,9 +57,14 @@ mybatis-plus:
     refresh: false  # 刷新Mapper,只在开发环境打开
 
 # 配置日志
+#logging:
+#  level:
+#    root: error  # 生产环境根级别配置error级别日志
+#    com.progzc.ke: error  # 生产环境项目配置error级别日志
+#    com.progzc.ke.mapper: error  # 生产环境dao层配置error级别日志
+#  file: error.log  # 生产环境将错误日志输出到当前项目根路径下的error.log文件
 logging:
   level:
-    root: error  # 生产环境根级别配置error级别日志
-    com.progzc.ke: error  # 生产环境项目配置error级别日志
-    com.progzc.ke.mapper: error  # 生产环境dao层配置error级别日志
-  file: error.log  # 生产环境将错误日志输出到当前项目根路径下的error.log文件
+    root: info # 开发测试环境根级别配置info级别日志
+    com.progzc.ke: debug  # 开发测试环境项目配置debug级别日志
+    com.progzc.ke.mapper: trace  # 开发测试环境dao层配置trace级别日志

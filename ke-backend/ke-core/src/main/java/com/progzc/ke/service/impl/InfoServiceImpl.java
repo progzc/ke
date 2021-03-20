@@ -34,4 +34,9 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
     public List<Integer> queryIdListByMenuId(Integer id) {
         return infoMapper.queryIdListByMenuId(id);
     }
+
+    @Override
+    public List<Info> queryIds() {
+        return infoMapper.queryIds();
+    }
 }

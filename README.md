@@ -118,3 +118,15 @@ CALL insert_course(39,365*3);
 ```
 
 ![image-20210316191330858](README.assets/image-20210316191330858.png)
+
+# 2 展示效果
+
+## 首页
+
+![image-20210320144212414](README.assets/image-20210320144212414.png)
+
+## IT互联网
+
+![image-20210320144308836](README.assets/image-20210320144308836.png)
+
+![image-20210320144342617](README.assets/image-20210320144342617.png)

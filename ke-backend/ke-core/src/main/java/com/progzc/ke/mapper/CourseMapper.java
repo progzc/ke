@@ -22,4 +22,7 @@ public interface CourseMapper extends BaseMapper<Course> {
 
     Long queryViewSumByCourseIds(@Param("idList") List<Integer> idList, Integer count);
 
+    Long querySellingSumByCourseId(Integer id, Integer count);
+
+    Long ViewSumByCourseId(Integer id, Integer count);
 }

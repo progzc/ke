@@ -22,5 +22,5 @@ public class WordCloud implements Serializable {
     private static final long serialVersionUID = -247629682917624014L;
 
     private String name;
-    private Integer value;
+    private Long value;
 }

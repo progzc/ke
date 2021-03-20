@@ -6,25 +6,33 @@
         SELECT * FROM course WHERE course_id = #{id} ORDER BY log_date DESC LIMIT 0,#{count}
     </select>
     <select id="querySellingSumByCourseIds" resultType="java.lang.Long">
-        select sum(o.selling_quantity)
-        from
-        (select selling_quantity
-        from course
-        where course_id in
+        SELECT SUM(o.selling_quantity)
+        FROM
+        (SELECT selling_quantity
+        FROM course
+        WHERE course_id IN
         <foreach item="item" index="index" open="(" separator="," close=")" collection="idList">
             #{item}
         </foreach>
-        ORDER BY log_date DESC LIMIT 0,#{count}) as o
+        ORDER BY log_date DESC LIMIT 0,#{count}) AS o
     </select>
     <select id="queryViewSumByCourseIds" resultType="java.lang.Long">
-        select sum(o.page_view)
-        from
-        (select page_view
-        from course
-        where course_id in
+        SELECT SUM(o.page_view)
+        FROM
+        (SELECT page_view
+        FROM course
+        WHERE course_id IN
         <foreach item="item" index="index" open="(" separator="," close=")" collection="idList">
             #{item}
         </foreach>
-        ORDER BY log_date DESC LIMIT 0,#{count}) as o
+        ORDER BY log_date DESC LIMIT 0,#{count}) AS o
+    </select>
+    <select id="querySellingSumByCourseId" resultType="java.lang.Long">
+        SELECT SUM(o.selling_quantity)
+        FROM (SELECT selling_quantity FROM course WHERE course_id = #{id} ORDER BY log_date DESC LIMIT 0,#{count}) AS o
+    </select>
+    <select id="ViewSumByCourseId" resultType="java.lang.Long">
+        SELECT SUM(o.page_view)
+        FROM (SELECT page_view FROM course WHERE course_id = #{id} ORDER BY log_date DESC LIMIT 0,#{count}) AS o
     </select>
 </mapper>

@@ -18,4 +18,8 @@ public interface CourseService extends IService<Course> {
     Long querySellingSumByCourseIds(List<Integer> idList, Integer count);
 
     Long queryViewSumByCourseIds(List<Integer> idList, Integer count);
+
+    Long querySellingSumByCourseId(Integer id, Integer count);
+
+    Long queryViewSumByCourseId(Integer id, Integer count);
 }

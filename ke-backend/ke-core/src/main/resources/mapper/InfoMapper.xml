@@ -4,4 +4,7 @@
     <select id="queryIdListByMenuId" resultType="java.lang.Integer">
         select id from info where menu_id = #{id}
     </select>
+    <select id="queryIds" resultType="com.progzc.ke.entity.Info">
+        select id,course_name from info
+    </select>
 </mapper>

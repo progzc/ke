@@ -1,10 +1,13 @@
 package com.progzc.ke.controller;
 
 import com.progzc.ke.common.Result;
+import com.progzc.ke.constants.RedisCacheNames;
 import com.progzc.ke.entity.Menu;
 import com.progzc.ke.service.MenuService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sys/menu")
+@CacheConfig(cacheNames = RedisCacheNames.MENU)
 public class MenuController {
 
     @Autowired
@@ -28,6 +32,7 @@ public class MenuController {
 
     @GetMapping("/nav")
     @ApiOperation(value = "查询导航菜单")
+    @Cacheable
     public Result nav() {
         List<Menu> menuList = menuService.listMenu();
         return Result.ok().put("menuList", menuList);
@@ -35,6 +40,7 @@ public class MenuController {
 
     @GetMapping("/module/{id}")
     @ApiOperation(value = "获取子模块的菜单")
+    @Cacheable
     public Result module(@PathVariable Integer id) {
         List<Menu> options = menuService.getModuleById(id);
         return Result.ok().put("options", options);

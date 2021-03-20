@@ -17,4 +17,6 @@ import java.util.List;
 public interface InfoMapper extends BaseMapper<Info> {
 
     List<Integer> queryIdListByMenuId(Integer id);
+
+    List<Info> queryIds();
 }

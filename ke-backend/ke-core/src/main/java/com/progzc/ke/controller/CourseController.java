@@ -44,7 +44,6 @@ public class CourseController {
     @Cacheable
     public Result lineChart(Integer id, Integer count, Integer category) {
         List<LineChart> lineChartsList = courseService.queryListByIdOfMode(id, count);
-        System.out.println(lineChartsList);
         Map<Integer, List<LineChart>> collect = lineChartsList.stream().
                 collect(Collectors.groupingBy(e -> e.getCourse().getCourseId(), Collectors.toList()));
         int len = collect.size();
@@ -60,7 +59,6 @@ public class CourseController {
             sery.setType("line");
             sery.setName(value.get(0).getCourseName());
             Integer[] ans;
-            System.out.println(value);
             if (Category.SELLING == category) {
                 ans = value.stream().map(e -> e.getCourse().getSellingQuantity()).toArray(Integer[]::new);
             } else {
@@ -70,7 +68,6 @@ public class CourseController {
                 ans[j] = ans[j - 1] + ans[j];
             }
             sery.setData(ans);
-            System.out.println(sery);
             series[i] = sery;
             i++;
         }

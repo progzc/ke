@@ -2,6 +2,9 @@ package com.progzc.ke.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.progzc.ke.entity.Course;
+import com.progzc.ke.entity.chart.HistogramChart;
+import com.progzc.ke.entity.chart.LineChart;
+import com.progzc.ke.entity.chart.WordCloud;
 
 import java.util.List;
 
@@ -13,13 +16,14 @@ import java.util.List;
  * @Version V1.0
  */
 public interface CourseService extends IService<Course> {
-    List<Course> queryListByCourseId(Integer id, Integer count);
 
-    Long querySellingSumByCourseIds(List<Integer> idList, Integer count);
+    List<LineChart> queryListByIdOfMode(Integer id, Integer count);
 
-    Long queryViewSumByCourseIds(List<Integer> idList, Integer count);
+    List<HistogramChart> querySellingSumByIdOfMenu(Integer menuId, Integer count);
 
-    Long querySellingSumByCourseId(Integer id, Integer count);
+    List<HistogramChart> queryViewSumByIdOfMenu(Integer menuId, Integer count);
 
-    Long queryViewSumByCourseId(Integer id, Integer count);
+    List<WordCloud> querySellingSumByGroup(Integer count);
+
+    List<WordCloud> queryViewSumByGroup(Integer count);
 }

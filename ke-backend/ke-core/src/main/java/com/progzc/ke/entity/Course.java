@@ -43,6 +43,6 @@ public class Course implements Serializable {
     private Integer sellingQuantity;
 
     @ApiModelProperty(value = "日期")
-    private Date date;
-    
+    private Date logDate;
+
 }

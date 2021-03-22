@@ -2,8 +2,10 @@ package com.progzc.ke.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.progzc.ke.entity.Course;
+import com.progzc.ke.entity.chart.HistogramChart;
+import com.progzc.ke.entity.chart.LineChart;
+import com.progzc.ke.entity.chart.WordCloud;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,13 +18,14 @@ import java.util.List;
  */
 @Mapper
 public interface CourseMapper extends BaseMapper<Course> {
-    List<Course> queryListByCourseId(Integer id, Integer count);
 
-    Long querySellingSumByCourseIds(@Param("idList") List<Integer> idList, Integer count);
+    List<LineChart> queryListByIdOfMode(Integer id, Integer count);
 
-    Long queryViewSumByCourseIds(@Param("idList") List<Integer> idList, Integer count);
+    List<HistogramChart> querySellingSumByIdOfMenu(Integer menuId, Integer count);
 
-    Long querySellingSumByCourseId(Integer id, Integer count);
+    List<WordCloud> querySellingSumByGroup(Integer count);
 
-    Long ViewSumByCourseId(Integer id, Integer count);
+    List<WordCloud> queryViewSumByGroup(Integer count);
+
+    List<HistogramChart> queryViewSumByIdOfMenu(Integer menuId, Integer count);
 }

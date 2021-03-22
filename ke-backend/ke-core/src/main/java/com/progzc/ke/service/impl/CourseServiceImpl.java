@@ -2,6 +2,9 @@ package com.progzc.ke.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.progzc.ke.entity.Course;
+import com.progzc.ke.entity.chart.HistogramChart;
+import com.progzc.ke.entity.chart.LineChart;
+import com.progzc.ke.entity.chart.WordCloud;
 import com.progzc.ke.mapper.CourseMapper;
 import com.progzc.ke.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,29 +28,28 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     private CourseMapper courseMapper;
 
     @Override
-    public List<Course> queryListByCourseId(Integer id, Integer count) {
-        return courseMapper.queryListByCourseId(id, count);
-
+    public List<LineChart> queryListByIdOfMode(Integer id, Integer count) {
+        return courseMapper.queryListByIdOfMode(id, count);
     }
 
     @Override
-    public Long querySellingSumByCourseIds(List<Integer> idList, Integer count) {
-        return courseMapper.querySellingSumByCourseIds(idList, count);
+    public List<HistogramChart> querySellingSumByIdOfMenu(Integer menuId, Integer count) {
+        return courseMapper.querySellingSumByIdOfMenu(menuId, count);
     }
 
     @Override
-    public Long queryViewSumByCourseIds(List<Integer> idList, Integer count) {
-        return courseMapper.queryViewSumByCourseIds(idList, count);
+    public List<HistogramChart> queryViewSumByIdOfMenu(Integer menuId, Integer count) {
+        return courseMapper.queryViewSumByIdOfMenu(menuId, count);
+    }
+
+
+    @Override
+    public List<WordCloud> querySellingSumByGroup(Integer count) {
+        return courseMapper.querySellingSumByGroup(count);
     }
 
     @Override
-    public Long querySellingSumByCourseId(Integer id, Integer count) {
-        return courseMapper.querySellingSumByCourseId(id, count);
-    }
-
-    @Override
-    public Long queryViewSumByCourseId(Integer id, Integer count) {
-
-        return courseMapper.ViewSumByCourseId(id, count);
+    public List<WordCloud> queryViewSumByGroup(Integer count) {
+        return courseMapper.queryViewSumByGroup(count);
     }
 }

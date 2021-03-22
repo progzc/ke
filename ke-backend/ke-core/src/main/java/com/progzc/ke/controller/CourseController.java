@@ -3,14 +3,11 @@ package com.progzc.ke.controller;
 import com.progzc.ke.common.Result;
 import com.progzc.ke.constants.Category;
 import com.progzc.ke.constants.RedisCacheNames;
-import com.progzc.ke.entity.Course;
-import com.progzc.ke.entity.Info;
-import com.progzc.ke.entity.Menu;
+import com.progzc.ke.entity.chart.HistogramChart;
+import com.progzc.ke.entity.chart.LineChart;
 import com.progzc.ke.entity.chart.Sery;
 import com.progzc.ke.entity.chart.WordCloud;
 import com.progzc.ke.service.CourseService;
-import com.progzc.ke.service.InfoService;
-import com.progzc.ke.service.MenuService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Description 课程销售信息控制器
@@ -38,67 +37,69 @@ import java.util.List;
 public class CourseController {
 
     @Autowired
-    private MenuService menuService;
-
-    @Autowired
     private CourseService courseService;
-
-    @Autowired
-    private InfoService infoService;
 
     @GetMapping("/lineChart")
     @ApiOperation(value = "获取子模块的折线图")
     @Cacheable
     public Result lineChart(Integer id, Integer count, Integer category) {
-        List<Info> infos = infoService.queryListByMenuId(id);
-        Iterator<Info> iterator = infos.iterator();
-        String[] legend = new String[infos.size()];
-        Sery[] series = new Sery[infos.size()];
+        List<LineChart> lineChartsList = courseService.queryListByIdOfMode(id, count);
+        System.out.println(lineChartsList);
+        Map<Integer, List<LineChart>> collect = lineChartsList.stream().
+                collect(Collectors.groupingBy(e -> e.getCourse().getCourseId(), Collectors.toList()));
+        int len = collect.size();
+        String[] legend = new String[len];
+        Sery[] series = new Sery[len];
         int i = 0;
-        while (iterator.hasNext()) {
-            Info next = iterator.next();
-            legend[i] = next.getCourseName();
+        Set<Map.Entry<Integer, List<LineChart>>> entries = collect.entrySet();
+
+        for (Map.Entry<Integer, List<LineChart>> entry : entries) {
+            List<LineChart> value = entry.getValue();
+            legend[i] = value.get(0).getCourseName();
             Sery sery = new Sery();
-            sery.setName(next.getCourseName());
             sery.setType("line");
-            List<Course> courses = courseService.queryListByCourseId(next.getId(), count);
+            sery.setName(value.get(0).getCourseName());
             Integer[] ans;
+            System.out.println(value);
             if (Category.SELLING == category) {
-                ans = courses.stream().map(Course::getSellingQuantity).toArray(Integer[]::new);
+                ans = value.stream().map(e -> e.getCourse().getSellingQuantity()).toArray(Integer[]::new);
             } else {
-                ans = courses.stream().map(Course::getPageView).toArray(Integer[]::new);
+                ans = value.stream().map(e -> e.getCourse().getPageView()).toArray(Integer[]::new);
             }
             for (int j = 1; j < ans.length; j++) {
                 ans[j] = ans[j - 1] + ans[j];
             }
             sery.setData(ans);
+            System.out.println(sery);
             series[i] = sery;
             i++;
         }
         return Result.ok().put("legend", legend).put("series", series);
+
     }
 
     @GetMapping("/histogramChart")
     @ApiOperation(value = "获取子模块的直方图")
     @Cacheable
     public Result histogramChart(Integer menuId, Integer count, Integer category) {
-        List<Menu> ids = menuService.getModuleById(menuId);
-        Iterator<Menu> iterator = ids.iterator();
-        String[] xAxisHdata = new String[ids.size()];
-        Long[] seriesHdata = new Long[ids.size()];
+        List<HistogramChart> histogramCharts;
+        if (Category.SELLING == category) {
+            histogramCharts = courseService.querySellingSumByIdOfMenu(menuId, count);
+        } else {
+            histogramCharts = courseService.queryViewSumByIdOfMenu(menuId, count);
+        }
+
+        int len = histogramCharts.size();
         int i = 0;
+        String[] xAxisHdata = new String[len];
+        Long[] seriesHdata = new Long[len];
+        Iterator<HistogramChart> iterator = histogramCharts.iterator();
         while (iterator.hasNext()) {
-            Menu next = iterator.next();
-            xAxisHdata[i] = next.getName();
-            List<Integer> idList = infoService.queryIdListByMenuId(next.getId());
-            if (Category.SELLING == category) {
-                seriesHdata[i] = courseService.querySellingSumByCourseIds(idList, count * ids.size());
-            } else {
-                seriesHdata[i] = courseService.queryViewSumByCourseIds(idList, count * ids.size());
-            }
+            HistogramChart next = iterator.next();
+            xAxisHdata[i] = next.getXAxisHdata();
+            seriesHdata[i] = next.getSeriesHdata();
             i++;
         }
-        System.out.println(Arrays.toString(seriesHdata));
         return Result.ok().put("xAxisHdata", xAxisHdata).put("seriesHdata", seriesHdata);
     }
 
@@ -106,23 +107,11 @@ public class CourseController {
     @ApiOperation(value = "获取全站的词云图")
     @Cacheable
     public Result wordCloud(Integer count, Integer category) {
-        List<Info> infos = infoService.queryIds();
-        int size = infos.size();
-        WordCloud[] wordClouds = new WordCloud[size];
-        int i = 0;
-        Iterator<Info> iterator = infos.iterator();
-        while (iterator.hasNext()) {
-            Info next = iterator.next();
-            WordCloud wordCloud = new WordCloud();
-            wordCloud.setName(next.getCourseName());
-            Long ans;
-            if (Category.SELLING == category) {
-                ans = courseService.querySellingSumByCourseId(next.getId(), count);
-            } else {
-                ans = courseService.queryViewSumByCourseId(next.getId(), count);
-            }
-            wordCloud.setValue(ans);
-            wordClouds[i++] = wordCloud;
+        List<WordCloud> wordClouds;
+        if (Category.SELLING == category) {
+            wordClouds = courseService.querySellingSumByGroup(count);
+        } else {
+            wordClouds = courseService.queryViewSumByGroup(count);
         }
         return Result.ok().put("wordClouds", wordClouds);
     }

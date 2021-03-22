@@ -33,7 +33,7 @@ const mainRoutes = {
 }
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL, // 路由跳转时的基路径
   routes: globalRoutes.concat(mainRoutes), // 合并全局路由和主路由
   scrollBehavior: () => ({ y: 0 }), // 每次访问滚动条都置零1

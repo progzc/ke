@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +35,18 @@ public class StreamGroup {
                     groupList.add(fooListByName);
                 });
         System.out.println(groupList);
+    }
+
+    @Test
+    public void test2() {
+        List<Foo> fooList = new ArrayList<>();
+        fooList.add(new Foo("A", "san", 1.0, 2));
+        fooList.add(new Foo("A", "nas", 13.0, 1));
+        fooList.add(new Foo("B", "san", 112.0, 3));
+        fooList.add(new Foo("C", "san", 43.0, 5));
+        fooList.add(new Foo("B", "nas", 77.0, 7));
+        Map<String, List<Foo>> collect = fooList.stream().collect(Collectors.groupingBy(Foo::getName, Collectors.toList()));
+        System.out.println(collect);
     }
 
     @Data
